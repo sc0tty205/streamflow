@@ -45,10 +45,10 @@ def plot_streamflow(dates, flows, sites):
     plt.show()
 
 
-if __name__ == "__main__":
-    sites = ["10163000", "10155200", "10155500", "10154200", "10155000"]
-    csv_path = Path(__file__).with_name(
+
+sites = ["10163000", "10155200", "10155500", "10154200", "10155000"]
+csv_path = Path(__file__).with_name(
         "June-2021-Provo-River-Streamflow-Rates (2).csv"
     )
-    dates, flows = load_streamflow(csv_path)
-    plot_streamflow(dates, flows, sites)
+dates, flows = load_streamflow(csv_path)
+plot_streamflow(dates, flows, sites)
