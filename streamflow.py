@@ -52,7 +52,8 @@ csv_path = Path(__file__).with_name(
         "June-2021-Provo-River-Streamflow-Rates (2).csv"
     )
 dates, flows = load_streamflow(csv_path)
- 
+
+# I used AI to help me write the summarize function. I made my own twerks and then used AI to clear it and fix any errors such as why the file was not being uploaded.
 def summarize(dates, flows, sites):
 # Gauge        Max (cfs)   Date of max      Min (cfs) Avg (cfs)
 # 10163000      131.0    2021-06-01 08:15     35.6      57.0
@@ -76,4 +77,17 @@ def summarize(dates, flows, sites):
         file.write("Gauge,Max (cfs),Date of max,Min (cfs),Avg (cfs)\n")
 
 summarize(dates, flows, sites)
+
+#I used AI to create the function for me because it was difficult for me to come up with it from the top of my mind. After AI created the code I reviewed it and connected it to the steps to make sure it aligns with the steps in the homework.
+#Here is the setup for the flow threshold.
+threshold = float(input("Enter a flow threshold in cfs: "))
+
+#The print statement for reported hours above the threshold.
+print(f"\nHours above {threshold:.1f} cfs:")
+
+#The settings for the reading thresholds
+for index, site in enumerate(sites):
+    readings_above_threshold = flows[:, index] > threshold
+    hours_above_threshold = np.sum(readings_above_threshold) * 0.25
+    print(f"{site}: {hours_above_threshold:.2f} hours")
 
