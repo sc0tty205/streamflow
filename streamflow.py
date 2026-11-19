@@ -52,4 +52,28 @@ csv_path = Path(__file__).with_name(
         "June-2021-Provo-River-Streamflow-Rates (2).csv"
     )
 dates, flows = load_streamflow(csv_path)
-plot_streamflow(dates, flows, sites)
+ 
+def summarize(dates, flows, sites):
+# Gauge        Max (cfs)   Date of max      Min (cfs) Avg (cfs)
+# 10163000      131.0    2021-06-01 08:15     35.6      57.0
+    print(f"{'Gauge':<12}{'Max (cfs)':>10}   "
+          f"{'Date of max':<16}{'Min (cfs)':>10}{'Avg (cfs)':>10}")
+
+    for index, site in enumerate(sites):
+        gauge_flows = flows[:, index]
+        max_index = np.argmax(gauge_flows)
+        max_flow = gauge_flows[max_index]
+        max_date = dates[max_index]
+        min_flow = np.min(gauge_flows)
+        average_flow = np.mean(gauge_flows)
+
+        print(f"{site:<12}{max_flow:>10.1f}   "
+              f"{max_date.strftime('%Y-%m-%d %H:%M'):<16}"
+              f"{min_flow:>10.1f}{average_flow:>10.1f}")
+
+
+    with open("streamflow_summary.csv", "w", newline="") as file:
+        file.write("Gauge,Max (cfs),Date of max,Min (cfs),Avg (cfs)\n")
+
+summarize(dates, flows, sites)
+
